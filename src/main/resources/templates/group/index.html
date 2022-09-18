@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>All groups</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-2" align="center">
+
+  <h3>Group List</h3>
+  <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.authorities,'ADMIN')}">
+    <a th:href="@{/group/new}" class="btn btn-primary btn-sm mb-3" >Add group</a>
+  </div>
+  <table style="width:80%" border="1"
+         class = "table table-striped table-responsive-md">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Amount of persons</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="group : ${group}">
+      <td th:text="${group.getId()}"></td>
+      <td th:text="${group.getName()}"></td>
+      <td></td>
+      <td>
+        <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.authorities,'ADMIN')}">
+          <a th:href="@{/group/delete/{id}(id=${group.getId()})}"
+             class="btn btn-danger">Delete</a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <hr>
+  <a th:href="@{/}">Back to main menu</a>
+</div>
+</body>
+</html>

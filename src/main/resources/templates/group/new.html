@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Group Management System</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <h1>Group Management System</h1>
+  <hr>
+  <h2>Save Group</h2>
+
+  <form action="#" th:action="@{/group/create}" th:object="${group}"
+        method="POST">
+    <br/>
+    <label for="name">Enter name</label>
+    <input type="text" th:field="*{name}" id="name"
+           class="form-control mb-4 col-4">
+
+    <button type="submit" class="btn btn-info col-2">Save Group</button>
+  </form>
+  <hr>
+  <a th:href="@{/group}">Back to Group List</a>
+</div>
+</body>
+</html>
