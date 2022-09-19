@@ -1,12 +1,12 @@
 package ua.yakubovskiy.springboot.spring_rest.exception;
 
 
-public class PersonIncorrectData {
+public class IncorrectData {
 
     private String info;
 
 
-    public PersonIncorrectData() {
+    public IncorrectData() {
     }
 
     public String getInfo() {

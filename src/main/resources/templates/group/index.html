@@ -29,7 +29,7 @@
     <tr th:each="group : ${group}">
       <td th:text="${group.getId()}"></td>
       <td th:text="${group.getName()}"></td>
-      <td></td>
+      <td th:text="${group.getPersonList().size()}"></td>
       <td>
         <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.authorities,'ADMIN')}">
           <a th:href="@{/group/delete/{id}(id=${group.getId()})}"

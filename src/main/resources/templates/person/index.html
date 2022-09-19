@@ -23,6 +23,7 @@
       <th>Name</th>
       <th>Age</th>
       <th>Email</th>
+      <th>Group</th>
       <th>Action</th>
     </tr>
     </thead>
@@ -32,10 +33,13 @@
       <td th:text="${person.getName()}"></td>
       <td th:text="${person.getAge()}"></td>
       <td th:text="${person.getEmail()}"></td>
+      <td th:text="${person.getGroup() != null} ? ${person.getGroup().getName()} : '-'"></td>
       <td>
         <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.authorities,'ADMIN')}">
           <a th:href="@{/person/edit/{id}(id=${person.getId()})}"
              class="btn btn-primary">Update</a>
+          <a th:href="@{/person/add_to_group/{id}(id=${person.getId()})}"
+             class="btn btn-success">Add to group</a>
           <a th:href="@{/person/delete/{id}(id=${person.getId()})}"
              class="btn btn-danger">Delete</a>
         </div>

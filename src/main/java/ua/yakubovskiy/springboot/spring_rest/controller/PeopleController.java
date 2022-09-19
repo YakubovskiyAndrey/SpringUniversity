@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.yakubovskiy.springboot.spring_rest.entity.Group;
 import ua.yakubovskiy.springboot.spring_rest.entity.Person;
+import ua.yakubovskiy.springboot.spring_rest.service.GroupService;
 import ua.yakubovskiy.springboot.spring_rest.service.PersonService;
 
 import javax.validation.Valid;
@@ -15,10 +17,12 @@ import javax.validation.Valid;
 public class PeopleController {
 
     private final PersonService personService;
+    private final GroupService groupService;
 
     @Autowired
-    public PeopleController(PersonService personService) {
+    public PeopleController(PersonService personService, GroupService groupService) {
         this.personService = personService;
+        this.groupService = groupService;
     }
 
     @GetMapping("/person")
@@ -49,10 +53,24 @@ public class PeopleController {
         return "person/edit";
     }
 
+    @GetMapping("/person/add_to_group/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String addToGroup(Model model, @PathVariable("id") int id) {
+        model.addAttribute("person", personService.show(id));
+        model.addAttribute("group", new Group());
+        return "person/add_to_group";
+    }
+
+    @PostMapping("/person/select_group/{id}")
+    public String update(@ModelAttribute("group") @Valid Group group, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        groupService.addPersonToGroup(group.getId(), personService.show(id));
+        return "redirect:/person";
+    }
+
     @PostMapping("/person/update/{id}")
     public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,
                          @PathVariable("id") int id) {
-
         if (bindingResult.hasErrors()){
             return "person/edit";
         }

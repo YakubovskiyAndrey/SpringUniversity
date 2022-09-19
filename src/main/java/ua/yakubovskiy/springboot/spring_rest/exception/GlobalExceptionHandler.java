@@ -6,23 +6,23 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class PersonGlobalExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<PersonIncorrectData> handlerException(
-            NoSuchPersonException exception){
+    public ResponseEntity<IncorrectData> handlerException(
+            NoSuchException exception){
 
-        PersonIncorrectData data = new PersonIncorrectData();
+        IncorrectData data = new IncorrectData();
         data.setInfo(exception.getMessage());
 
         return new ResponseEntity<>(data, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    public ResponseEntity<PersonIncorrectData> handlerException(
+    public ResponseEntity<IncorrectData> handlerException(
             Exception exception){
 
-        PersonIncorrectData data = new PersonIncorrectData();
+        IncorrectData data = new IncorrectData();
         data.setInfo(exception.getMessage());
 
         return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);

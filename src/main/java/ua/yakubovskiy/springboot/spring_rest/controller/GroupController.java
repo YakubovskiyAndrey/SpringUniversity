@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ua.yakubovskiy.springboot.spring_rest.entity.Group;
 import ua.yakubovskiy.springboot.spring_rest.service.GroupService;
@@ -39,6 +39,13 @@ public class GroupController {
     @PostMapping("/group/create")
     public String create(@ModelAttribute("group") @Valid Group group) {
         groupService.save(group);
+        return "redirect:/group";
+    }
+
+    @GetMapping("/group/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String delete(@PathVariable("id") int id) {
+        groupService.delete(id);
         return "redirect:/group";
     }
 

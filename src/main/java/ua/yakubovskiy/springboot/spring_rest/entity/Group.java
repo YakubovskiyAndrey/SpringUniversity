@@ -1,6 +1,7 @@
 package ua.yakubovskiy.springboot.spring_rest.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -13,6 +14,10 @@ public class Group {
     private int id;
     @Column(name = "name")
     private String name;
+
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            mappedBy = "group")
+    private List<Person> personList;
 
 
     public Group(String name, int id) {
@@ -37,5 +42,13 @@ public class Group {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
     }
 }

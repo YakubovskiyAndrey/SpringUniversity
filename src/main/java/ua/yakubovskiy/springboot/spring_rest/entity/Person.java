@@ -28,6 +28,10 @@ public class Person {
     @Column(name = "email")
     private String email;
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "group_id")
+    private Group group;
+
     public Person(int id, String name, String email, int age) {
         this.id = id;
         this.name = name;
@@ -69,4 +73,11 @@ public class Person {
         this.name = name;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 }
